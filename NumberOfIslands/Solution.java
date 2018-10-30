@@ -71,7 +71,26 @@ class Solution{
 
 
 
-	class UnionFind{
+    public int numIslands_UnionFind(char[][] grid) {
+        if(grid == null || grid.length == 0)
+            return 0;
+        int m = grid.length, n = grid[0].length;
+        UnionFind uf = new UnionFind(grid);
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(grid[i][j] == '1'){
+                    grid[i][j] = '0';
+                    int index = i*n+j;
+                    if(i+1<m && grid[i+1][j] == '1')
+                        uf.union(index, index+n);
+                    if(j+1<n && grid[i][j+1] == '1')
+                        uf.union(index, index+1);
+                }
+            }
+        }
+        return uf.getCount();
+    }
+    class UnionFind{
 		int count;
 		int[] parent;
 		int[] rank;
@@ -97,7 +116,7 @@ class Solution{
 
 		public int find(int i){
 			if(parent[i] != i)
-				parent[i] = find[parent[i]];
+				parent[i] = find(parent[i]);
 			return parent[i];
 		}
 
@@ -107,7 +126,7 @@ class Solution{
 			if(rooty != rootx){
 				if(rank[rootx] > rank[rooty])
 					parent[rooty] = rootx;
-				else if(rank[rootx] < rank rooty)
+				else if(rank[rootx] < rank[rooty])
 					parent[rootx] = rooty;
 				else{
 					parent[rooty] = rootx;
