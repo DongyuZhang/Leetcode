@@ -1,5 +1,5 @@
 /*
-Given an integer array nums, find the contiguous subarray (containing at least one number) 
+Given an integer array nums, find the contiguous subarray (containing at least one number)
 which has the largest sum and return its sum.
 
 Example:
@@ -9,7 +9,7 @@ Output: 6
 Explanation: [4,-1,2,1] has the largest sum = 6.
 Follow up:
 
-If you have figured out the O(n) solution, 
+If you have figured out the O(n) solution,
 try coding another solution using the divide and conquer approach, which is more subtle.
 */
 
@@ -29,6 +29,16 @@ class Solution{
 		for(int i = 1; i < nums.length; i++){
 			dp[i] = Math.max(dp[i-1]+nums[i], nums[i]);
 			res = Math.max(res, dp[i]);
+		}
+		return res;
+	}
+	public int maxSubArray_optimized(int[] nums){
+		if(nums.length == 0)
+			return 0;
+		int res = nums[0];
+		for(int i = 1; i < nums.length; i++){
+			nums[i] = Math.max(nums[i], nums[i-1]+nums[i]);
+			res = Math.max(res, nums[i]);
 		}
 		return res;
 	}
